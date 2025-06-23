@@ -34,6 +34,39 @@ lw x6, 0(x7)
 
 Each instruction will occupy a different stage of the pipeline in each clock cycle, enabling overlapping execution.
 
+### Case 1: **No Forwarding** (Classic 5-stage pipeline, with stalls)
+
+We’ll insert **two stall cycles** after the `add`, since `x1` will be written back in cycle 5, but `sub` needs it in its **EX stage**, which would be in cycle 3.
+
+|**Cycle**|**IF**|**ID**|**EX**|**MEM**|**WB**|
+|---|---|---|---|---|---|
+|1|`add x1, x2, x3`|||||
+|2|`stall`|`add x1, x2, x3`||||
+|3|`stall`||`add x1, x2, x3`|||
+|4|`sub x4, x1, x5`|||`add x1, x2, x3`||
+|5|`lw x6, 0(x7)`|`sub x4, x1, x5`|||`add x1, x2, x3`|
+|6||`lw x6, 0(x7)`|`sub x4, x1, x5`|||
+|7|||`lw x6, 0(x7)`|`sub x4, x1, x5`||
+|8||||`lw x6, 0(x7)`|`sub x4, x1, x5`|
+|9|||||`lw x6, 0(x7)`|
+
+---
+
+### Case 2: **With Forwarding** (data forwarded from MEM/WB to EX)
+
+With forwarding, we can reduce this to a **single stall**, because the result of `add` can be forwarded to the `EX` stage of `sub`.
+
+|**Cycle**|**IF**|**ID**|**EX**|**MEM**|**WB**|
+|---|---|---|---|---|---|
+|1|`add x1, x2, x3`|||||
+|2|`stall`|`add x1, x2, x3`||||
+|3|`sub x4, x1, x5`||`add x1, x2, x3`|||
+|4|`lw x6, 0(x7)`|`sub x4, x1, x5`||`add x1, x2, x3`||
+|5||`lw x6, 0(x7)`|`sub x4, x1, x5`||`add x1, x2, x3`|
+|6|||`lw x6, 0(x7)`|`sub x4, x1, x5`||
+|7||||`lw x6, 0(x7)`|`sub x4, x1, x5`|
+|8|||||`lw x6, 0(x7)`|
+
 ---
 
 # Pipeline Hazards
