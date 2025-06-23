@@ -297,7 +297,7 @@ Example logic:
     
 - This leads to **faster and smaller** control logic.
 
-![alu_op](../images/alu_op_table)
+![alu_op](../images/alu_op_table.png)
 
 ---
 
