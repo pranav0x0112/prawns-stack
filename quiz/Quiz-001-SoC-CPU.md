@@ -91,4 +91,4 @@ If your program counter starts at `0x00000000`, where should you put the boot co
 
 ---
 
-See you on Day-2!
+See you on [Day-2](./Quiz-002-Pipeline-Control-and-Memory-Semantics.md)!

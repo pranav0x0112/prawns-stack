@@ -99,4 +99,4 @@ d) Start of a burst transfer
 </details>
 
 ---
-See you on Day-3!
+See you on [Day-3](./Quiz-003-Pipeline-Tracing-TileLink-OoO-Foundations.md)!
