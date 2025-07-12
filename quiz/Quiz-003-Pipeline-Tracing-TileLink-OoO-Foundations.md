@@ -1,3 +1,5 @@
+## Quiz 003: Pipeline Tracing, TileLink, and OoO Foundations
+
 ### 1. **Pipeline Trace**
 
 You have a 5-stage pipeline (IF, ID, EX, MEM, WB).  
